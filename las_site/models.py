@@ -13,3 +13,16 @@ class Entry(models.Model):
     def __str__(self):
         """Return a string representation of the model."""
         return self.image
+
+class Comment(models.Model):
+    """A comment attached to an entry."""
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'comments'
+
+    def __str__(self):
+        """Return a string representation of the model."""
+        return self.text
