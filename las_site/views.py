@@ -1,11 +1,25 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from .models import Entry
+from .forms import EntryForm
 
 def index(request):
-    """The home page for las."""
+    """The home page and submission form for las."""
     entries = Entry.objects.order_by('date_added')
-    context = {'entries': entries}
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = EntryForm()
+    else:
+        # POST data submitted; process data.
+        form = EntryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('las_site:index'))
+
+    context = {'entries': entries, 'form': form}
     return render(request, 'las_site/index.html', context)
 
 def entry(request, entry_id):
