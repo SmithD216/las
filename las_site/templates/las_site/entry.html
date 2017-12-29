@@ -1,0 +1,18 @@
+{% extends 'las_site/base.html' %}
+
+{% block content %}
+    <img src= {{ entry }}>
+    <p>Comments: </p>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <p>{{ comment.date_added|date:'M d, Y H:i' }}</p>
+                <p>{{ comment.text|linebreaks }}</p>
+            </li>
+        {% empty %}
+            <li>
+                There are no comments for this entry yet.
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
