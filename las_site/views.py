@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Entry, Comment
 from .forms import EntryForm, CommentForm
@@ -22,6 +23,7 @@ def index(request):
     context = {'entries': entries, 'form': form}
     return render(request, 'las_site/index.html', context)
 
+@login_required
 def entry(request, entry_id):
     """Show a single entry and all its comments."""
     entry = Entry.objects.get(id=entry_id)
@@ -42,6 +44,7 @@ def entry(request, entry_id):
     context = {'entry':entry, 'comments':comments, 'form':form}
     return render(request, 'las_site/entry.html', context)
 
+@login_required
 def edit_comment(request, comment_id):
     """Edit an existing comment."""
     comment = Comment.objects.get(id=comment_id)

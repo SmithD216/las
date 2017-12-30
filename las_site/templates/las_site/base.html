@@ -1,6 +1,13 @@
 <title>Drawring</title>
 <p>
-    <a href="{% url 'las_site:index' %}">Drawing Site</a>
+    <a href="{% url 'las_site:index' %}">Home</a> - 
+    {% if user.is_authenticated %}
+        Hello, {{ user.username }}.
+        <a href="{% url 'users:logout' %}">Log Out</a>
+    {% else %}
+        <a href="{% url 'users:register' %}">Register</a> - 
+        <a href="{% url 'users:login' %}">Log In</a>
+    {% endif %}
 </p>
 
 {% block content %}
