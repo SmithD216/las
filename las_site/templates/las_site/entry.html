@@ -1,7 +1,7 @@
 {% extends 'las_site/base.html' %}
 
 {% block content %}
-    <img src= {{ entry }}>
+    <a href= {{ entry.image }}><img src= {{ entry }}></a>
 
     <form action="{% url 'las_site:entry' entry.id %}" method='post'>
         {% csrf_token %}
@@ -13,6 +13,7 @@
     <ul>
         {% for comment in comments %}
             <li>
+                <p><a href="{% url 'las_site:edit_comment' comment.id %}">Edit</a></p>
                 <p>{{ comment.date_added|date:'M d, Y H:i' }}</p>
                 <p>{{ comment.text|linebreaks }}</p>
             </li>

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Entry
+from .models import Entry, Comment
 from .forms import EntryForm, CommentForm
 
 def index(request):
@@ -41,3 +41,21 @@ def entry(request, entry_id):
 
     context = {'entry':entry, 'comments':comments, 'form':form}
     return render(request, 'las_site/entry.html', context)
+
+def edit_comment(request, comment_id):
+    """Edit an existing comment."""
+    comment = Comment.objects.get(id=comment_id)
+    entry = comment.entry
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current entry.
+        form = CommentForm(instance=comment)
+    else:
+        # POST data submitted; process data.
+        form = CommentForm(instance=comment, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('las_site:entry', args=[entry.id]))
+    
+    context = {'entry':entry, 'comment': comment, 'form': form}
+    return render(request, 'las_site/edit_comment.html', context)

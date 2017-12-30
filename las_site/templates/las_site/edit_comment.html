@@ -1,0 +1,10 @@
+{% extends "las_site/base.html" %}
+
+{% block content %}
+    <p>Edit comment:</p>
+    <form action="{% url 'las_site:edit_comment' comment.id %}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Save</button>
+    </form>
+{% endblock content %}
