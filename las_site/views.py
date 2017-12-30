@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .models import Entry
-from .forms import EntryForm
+from .forms import EntryForm, CommentForm
 
 def index(request):
     """The home page and submission form for las."""
@@ -26,5 +26,18 @@ def entry(request, entry_id):
     """Show a single entry and all its comments."""
     entry = Entry.objects.get(id=entry_id)
     comments = entry.comment_set.order_by('-date_added')
-    context = {'entry':entry, 'comments':comments}
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = CommentForm()
+    else:
+        # POST data submitted; process data.
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.entry = entry
+            new_comment.save()
+            return HttpResponseRedirect(reverse('las_site:entry', args=[entry_id]))
+
+    context = {'entry':entry, 'comments':comments, 'form':form}
     return render(request, 'las_site/entry.html', context)
