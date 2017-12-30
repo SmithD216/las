@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -17,7 +17,9 @@ def index(request):
         # POST data submitted; process data.
         form = EntryForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_entry = form.save(commit=False)
+            new_entry.owner = request.user
+            new_entry.save()
             return HttpResponseRedirect(reverse('las_site:index'))
 
     context = {'entries': entries, 'form': form}
@@ -49,6 +51,9 @@ def edit_comment(request, comment_id):
     """Edit an existing comment."""
     comment = Comment.objects.get(id=comment_id)
     entry = comment.entry
+
+    if entry.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current entry.
