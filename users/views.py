@@ -3,6 +3,10 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.models import User
+from las_site.models import Entry
 
 def logout_view(request):
     """Log the user out."""
@@ -27,3 +31,11 @@ def register(request):
     
     context = {'form':form}
     return render(request, 'users/register.html', context)
+
+@login_required
+def profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    entries = Entry.objects.order_by('-date_added')
+
+    context = {'user':user, 'entries':entries}
+    return render(request, 'users/profile.html', context)

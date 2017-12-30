@@ -2,7 +2,7 @@
 
 {% block content %}
     <a href= {{ entry.image }}><img src= {{ entry }}></a>
-    <p>Author: {{ entry.owner }}</p>
+    <a href="{% url 'users:profile' entry.owner.id %}"><p>Author: {{ entry.owner }}</p></a>
 
     <form action="{% url 'las_site:entry' entry.id %}" method='post'>
         {% csrf_token %}

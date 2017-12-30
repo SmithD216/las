@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view, name='logout'),
     # Registration page
     url(r'^register/$', views.register, name='register'),
+    #User profile page
+    url(r'^(?P<user_id>\d+)/$', views.profile, name='profile'),
 ]
