@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.utils.timezone import datetime
 
 from .models import Entry, Comment
@@ -22,6 +23,9 @@ def index(request):
             new_entry = form.save(commit=False)
             new_entry.owner = request.user
             new_entry.save()
+            user = User.objects.get(pk=request.user.id)
+            user.member.submissions_today += 1
+            user.save()
             return HttpResponseRedirect(reverse('las_site:index'))
 
     context = {'entries': entries, 'entries_today': entries_today, 'form': form}

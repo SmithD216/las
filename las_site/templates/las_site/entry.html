@@ -1,7 +1,7 @@
 {% extends 'las_site/base.html' %}
 
 {% block content %}
-    <a href= {{ entry.image }}><img src= {{ entry }}></a>
+    <a href= {{ entry.image }}><img src= {{ entry }} class="img-responsive"></a>
     <a href="{% url 'users:profile' entry.owner.id %}"><p>Author: {{ entry.owner }}</p></a>
 
     <form action="{% url 'las_site:entry' entry.id %}" method='post'>

@@ -1,8 +1,13 @@
 {% extends "las_site/base.html" %}
 
+{% block leftbar %}
+    <h4>{{user.username}}'s Profile</h4>
+    <p>Total entries: {{ user.member.total_submissions }}.</p>
+    <p>Entries today: {{ user.member.submissions_today }}.</p>
+{% endblock leftbar %}
+
 {% block content %}
     <h4> {{user.username}} 's Entries</h4>
-    <p>{{ user.member.submissions }}</p>
     {% for entry in entries %}
         <div class="col-md-3">
             <a href="{% url 'las_site:entry' entry.id %}">
