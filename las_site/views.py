@@ -8,7 +8,7 @@ from .forms import EntryForm, CommentForm
 
 def index(request):
     """The home page and submission form for las."""
-    entries = Entry.objects.order_by('date_added')
+    entries = Entry.objects.order_by('-date_added')
 
     if request.method != 'POST':
         # No data submitted; create a blank form.

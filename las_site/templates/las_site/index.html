@@ -1,5 +1,20 @@
 {% extends "las_site/base.html" %}
 
+{% block leftbar %}
+    <div id="left-entry-list">
+        <h4>Latest entries:</h4>
+        <ul>
+            {% for entry in entries %}
+                <a href="{% url 'las_site:entry' entry.id %}">
+                    <p>{{ entry.owner }} - {{ entry.date_added|date:'H:i' }}</p>
+                </a>
+            {% empty %}
+                <p>No entries have been added yet.</p>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock leftbar %}
+
 {% block content %}
     <h4>Submit a new entry:</h4>
         <form action="{% url 'las_site:index' %}" method='post'>
@@ -14,6 +29,6 @@
             <img src={{ entry.image }} alt={{ entry.blurb }}>
         </a>
     {% empty %}
-        <p>No entries have been added yet.</p>
+        <p>No entries have been added yet today.</p>
     {% endfor %}
 {% endblock content %}
