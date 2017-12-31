@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
 from las_site.models import Entry
+from .models import Member
 
 def logout_view(request):
     """Log the user out."""
@@ -35,7 +36,9 @@ def register(request):
 @login_required
 def profile(request, user_id):
     user = User.objects.get(id=user_id)
+    member = Member.objects.get(user=user_id)
+
     entries = Entry.objects.filter(owner=user).order_by('-date_added')
 
-    context = {'user':user, 'entries':entries}
+    context = {'user':user, 'entries':entries, 'member':member}
     return render(request, 'users/profile.html', context)

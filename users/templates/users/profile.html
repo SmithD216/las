@@ -2,10 +2,13 @@
 
 {% block content %}
     <h4> {{user.username}} 's Entries</h4>
+    <p>{{ user.member.submissions }}</p>
     {% for entry in entries %}
-        <a href="{% url 'las_site:entry' entry.id %}">
-            <img src={{ entry.image }} alt={{ entry.blurb }}>
-        </a>
+        <div class="col-md-3">
+            <a href="{% url 'las_site:entry' entry.id %}">
+                <img src= {{ entry.image }} class="img-responsive center-block">
+            </a>
+        </div>
     {% empty %}
         <p>No entries have been added yet.</p>
     {% endfor %}
