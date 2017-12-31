@@ -3,6 +3,7 @@
 {% block content %}
     <a href= {{ entry.image }}><img src= {{ entry }} class="img-responsive"></a>
     <a href="{% url 'users:profile' entry.owner.id %}"><p>Author: {{ entry.owner }}</p></a>
+    <p>Description: {{ entry.blurb }}</p>
 
     <form action="{% url 'las_site:entry' entry.id %}" method='post'>
         {% csrf_token %}

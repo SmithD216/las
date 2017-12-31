@@ -4,6 +4,7 @@
     <h4>{{user.username}}'s Profile</h4>
     <p>Total entries: {{ user.member.total_submissions }}.</p>
     <p>Entries today: {{ user.member.submissions_today }}.</p>
+    <p>Current streak: {{ user.member.streak }}.</p>
 {% endblock leftbar %}
 
 {% block content %}

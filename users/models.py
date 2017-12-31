@@ -8,6 +8,7 @@ class Member(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     submissions_today = models.PositiveIntegerField(default=0)
     total_submissions = models.PositiveIntegerField(default=0)
+    streak = models.PositiveIntegerField(default=0)
 
 @receiver(post_save, sender=User)
 def create_member_profile(sender, instance, created, **kwargs):

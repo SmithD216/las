@@ -18,13 +18,15 @@ def index(request):
         form = EntryForm()
     else:
         # POST data submitted; process data.
+        user = User.objects.get(pk=request.user.id)
+        user_entries_today = user.member.submissions_today
         form = EntryForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and user_entries_today < 20:
             new_entry = form.save(commit=False)
             new_entry.owner = request.user
             new_entry.save()
-            user = User.objects.get(pk=request.user.id)
             user.member.submissions_today += 1
+            user.member.total_submissions += 1
             user.save()
             return HttpResponseRedirect(reverse('las_site:index'))
 
