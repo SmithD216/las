@@ -7,7 +7,7 @@ class EntryForm(forms.ModelForm):
         model = Entry
         fields = ['image', 'blurb']
         labels = {'image':'Image url ', 'blurb':'Description '}
-        widgets = {'blurb': forms.Textarea(attrs={'cols': 80})}
+        widgets = {'blurb': forms.Textarea(attrs={'rows': 2, 'cols': 80})}
 
 class CommentForm(forms.ModelForm):
     class Meta:

@@ -23,18 +23,24 @@
 {% endblock leftbar %}
 
 {% block content %}
-    <h4>Submit a new entry:</h4>
-        <form action="{% url 'las_site:index' %}" method='post'>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button name="submit">Submit</button>
-        </form>
+    <div class="row text-center">
+        {% if user.is_authenticated %}
+            <button class="btn" data-toggle="collapse" data-target="#entryform"><h4>Submit a new entry</h4></button>
+            <div id="entryform" class="collapse">
+                <form action="{% url 'las_site:index' %}" method='post'>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button name="submit">Submit</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
 
     <h4>Today's Entries</h4>
-        {% for entry in entries %}
+        {% for entry in entries_today %}
             <div class="col-md-3">
                 <a href="{% url 'las_site:entry' entry.id %}">
-                    <img class="img-responsive" id="index-entry" src={{ entry.image }} alt={{ entry.blurb }}>
+                    <img class="img-responsive center-block" id="index-entry" src={{ entry.image }}>
                 </a>
             </div>
         {% empty %}

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import datetime
 
 from .models import Entry, Comment
 from .forms import EntryForm, CommentForm
@@ -9,6 +10,7 @@ from .forms import EntryForm, CommentForm
 def index(request):
     """The home page and submission form for las."""
     entries = Entry.objects.order_by('-date_added')
+    entries_today = Entry.objects.filter(date_added__date = datetime.today().date()).order_by('-date_added')
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -22,7 +24,7 @@ def index(request):
             new_entry.save()
             return HttpResponseRedirect(reverse('las_site:index'))
 
-    context = {'entries': entries, 'form': form}
+    context = {'entries': entries, 'entries_today': entries_today, 'form': form}
     return render(request, 'las_site/index.html', context)
 
 @login_required

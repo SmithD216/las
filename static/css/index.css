@@ -1,12 +1,12 @@
-html{
-    background: green;
-}
-
-body{
-    color: red;
-    background: black;
+#entryform{
+    padding-top: 10px;
 }
 
 #index-entry{
-    height: 200px;
+    padding-bottom: 10px;
+}
+
+#index-entry .img{
+    min-height: 200px;
+    max-height: 350px;
 }
