@@ -35,7 +35,7 @@ def register(request):
 @login_required
 def profile(request, user_id):
     user = User.objects.get(id=user_id)
-    entries = Entry.objects.order_by('-date_added')
+    entries = Entry.objects.filter(owner=user).order_by('-date_added')
 
     context = {'user':user, 'entries':entries}
     return render(request, 'users/profile.html', context)

@@ -1,0 +1,12 @@
+html{
+    background: green;
+}
+
+body{
+    color: red;
+    background: black;
+}
+
+#index-entry{
+    height: 200px;
+}

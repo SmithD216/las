@@ -1,4 +1,11 @@
 {% extends "las_site/base.html" %}
+{% load staticfiles %}
+
+<head>
+    {% block head %}
+        <LINK REL=StyleSheet HREF="{% static 'css/index.css' %}" TYPE="text/css" MEDIA=screen>
+    {% endblock head %}
+</head>
 
 {% block leftbar %}
     <div id="left-entry-list">
@@ -27,7 +34,7 @@
         {% for entry in entries %}
             <div class="col-md-3">
                 <a href="{% url 'las_site:entry' entry.id %}">
-                    <img class="img-responsive" src={{ entry.image }} alt={{ entry.blurb }}>
+                    <img class="img-responsive" id="index-entry" src={{ entry.image }} alt={{ entry.blurb }}>
                 </a>
             </div>
         {% empty %}
