@@ -2,11 +2,12 @@
     padding-top: 10px;
 }
 
-#index-entry{
+.index-entry{
     padding-bottom: 10px;
+    height: 350px;
 }
 
-#index-entry .img{
-    min-height: 200px;
-    max-height: 350px;
+.index-entry img{
+    max-height: 100%;
+    max-width: 100%;
 }

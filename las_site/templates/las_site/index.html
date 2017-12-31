@@ -39,9 +39,11 @@
     <h4>Today's Entries</h4>
         {% for entry in entries_today %}
             <div class="col-md-3">
-                <a href="{% url 'las_site:entry' entry.id %}">
-                    <img class="img-responsive center-block" id="index-entry" src={{ entry.image }}>
-                </a>
+                <div class="index-entry">
+                    <a href="{% url 'las_site:entry' entry.id %}">
+                        <img class="img-responsive center-block" src={{ entry.image }}>
+                    </a>
+                </div>
             </div>
         {% empty %}
             <p>No entries have been added yet today.</p>

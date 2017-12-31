@@ -25,6 +25,10 @@ def index(request):
             new_entry = form.save(commit=False)
             new_entry.owner = request.user
             new_entry.save()
+            # This will increment the streak regardless of whether it is a streak
+            # but this'll be checked by the countdown cron any way
+            if user.member.submissions_today == 0:
+                user.member.streak += 1
             user.member.submissions_today += 1
             user.member.total_submissions += 1
             user.save()
