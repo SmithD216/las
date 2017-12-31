@@ -1,4 +1,11 @@
 {% extends "las_site/base.html" %}
+{% load static %}
+
+<head>
+    {% block head %}
+        <LINK REL=StyleSheet HREF="{% static 'css/profile.css' %}" TYPE="text/css" MEDIA=screen>
+    {% endblock head %}
+</head>
 
 {% block leftbar %}
     <h4>{{user.username}}'s Profile</h4>
@@ -11,9 +18,11 @@
     <h4> {{user.username}} 's Entries</h4>
     {% for entry in entries %}
         <div class="col-md-3">
-            <a href="{% url 'las_site:entry' entry.id %}">
-                <img src= {{ entry.image }} class="img-responsive center-block">
-            </a>
+            <div class="profile-entry">
+                <a href="{% url 'las_site:entry' entry.id %}">
+                    <img src= {{ entry.image }} class="img-responsive center-block">
+                </a>
+            </div>
         </div>
     {% empty %}
         <p>No entries have been added yet.</p>
