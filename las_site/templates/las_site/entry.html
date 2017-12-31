@@ -14,8 +14,10 @@
     <ul>
         {% for comment in comments %}
             <li>
-                <p><a href="{% url 'las_site:edit_comment' comment.id %}">Edit</a></p>
-                <p>{{ comment.date_added|date:'M d, Y H:i' }}</p>
+                {% if user.id == comment.owner.id %}
+                    <p><a href="{% url 'las_site:edit_comment' comment.id %}">Edit</a></p>
+                {% endif %}
+                <p>{{ comment.owner }} - {{ comment.date_added|date:'M d, Y H:i' }}</p>
                 <p>{{ comment.text|linebreaks }}</p>
             </li>
         {% empty %}

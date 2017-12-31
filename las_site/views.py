@@ -39,6 +39,7 @@ def entry(request, entry_id):
         form = CommentForm(data=request.POST)
         if form.is_valid():
             new_comment = form.save(commit=False)
+            new_comment.owner = request.user
             new_comment.entry = entry
             new_comment.save()
             return HttpResponseRedirect(reverse('las_site:entry', args=[entry_id]))
@@ -52,7 +53,7 @@ def edit_comment(request, comment_id):
     comment = Comment.objects.get(id=comment_id)
     entry = comment.entry
 
-    if entry.owner != request.user:
+    if comment.owner != request.user:
         raise Http404
 
     if request.method != 'POST':
