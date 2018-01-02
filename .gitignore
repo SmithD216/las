@@ -1,6 +1,7 @@
 las_env
 db.sqlite3
 las/settings.py
+.vscode
 *.egg-info
 *.pot
 *.py[co]
