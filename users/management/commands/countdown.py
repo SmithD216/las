@@ -1,2 +1,2 @@
 from users.models import Member
-Member.objects.all.update(submissions_today=0)
+Member.objects.update(submissions_today=0)
