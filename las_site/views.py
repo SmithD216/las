@@ -21,7 +21,7 @@ def index(request):
         user = User.objects.get(pk=request.user.id)
         user_entries_today = user.member.submissions_today
         form = EntryForm(request.POST)
-        if form.is_valid() and user_entries_today < 2:
+        if form.is_valid() and user_entries_today < 1:
             new_entry = form.save(commit=False)
             new_entry.owner = request.user
             new_entry.save()
