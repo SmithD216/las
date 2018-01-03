@@ -8,10 +8,13 @@ from django.utils.timezone import datetime
 from .models import Entry, Comment
 from .forms import EntryForm, CommentForm
 
+import time
+
 def index(request):
     """The home page and submission form for las."""
-    entries = Entry.objects.order_by('-date_added')
+    entries = Entry.objects.order_by('-date_added')[:25]
     entries_today = Entry.objects.filter(date_added__date = datetime.today().date()).order_by('-date_added')
+    clock = int(time.time())
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -34,7 +37,7 @@ def index(request):
             user.save()
             return HttpResponseRedirect(reverse('las_site:index'))
 
-    context = {'entries': entries, 'entries_today': entries_today, 'form': form}
+    context = {'entries': entries, 'entries_today': entries_today, 'form': form, 'clock':clock}
     return render(request, 'las_site/index.html', context)
 
 @login_required

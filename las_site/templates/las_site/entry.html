@@ -1,4 +1,11 @@
 {% extends 'las_site/base.html' %}
+{% load staticfiles %}
+
+<head>
+    {% block head %}
+        <LINK REL=StyleSheet HREF="{% static 'css/entry.css' %}" TYPE="text/css" MEDIA=screen>
+    {% endblock head %}
+</head>
 
 {% block content %}
     <a href= {{ entry.image }}><img src= {{ entry }} class="img-responsive"></a>
@@ -12,19 +19,19 @@
     </form>
 
     <p>Comments: </p>
-    <ul>
         {% for comment in comments %}
-            <li>
-                {% if user.id == comment.owner.id %}
-                    <p><a href="{% url 'las_site:edit_comment' comment.id %}">Edit</a></p>
-                {% endif %}
-                <p>{{ comment.owner }} - {{ comment.date_added|date:'M d, Y H:i' }}</p>
-                <p>{{ comment.text|linebreaks }}</p>
-            </li>
+            <div class="comment">
+                <div class="comment-title">
+                    {% if user.id == comment.owner.id %}
+                        <p class="comment-edit"><a href="{% url 'las_site:edit_comment' comment.id %}">Edit</a></p>
+                    {% endif %}
+                    <p class="comment-info">{{ comment.owner }} - {{ comment.date_added|date:'M d, Y H:i' }}</p>
+                </div>
+                <p class="comment-content">{{ comment.text }}</p>
+            </div>
         {% empty %}
-            <li>
+            <p>
                 There are no comments for this entry yet.
-            </li>
+            </p>
         {% endfor %}
-    </ul>
 {% endblock content %}

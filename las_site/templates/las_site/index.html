@@ -4,10 +4,15 @@
 <head>
     {% block head %}
         <LINK REL=StyleSheet HREF="{% static 'css/index.css' %}" TYPE="text/css" MEDIA=screen>
+        <script type="text/javascript">var unixCountdown = "{{clock}}"</script>
+        <script src="{% static 'js/countdown.js' %}"></script>
     {% endblock head %}
 </head>
 
 {% block leftbar %}
+    <div id="countdown" class="text-center">
+        {{ clock }}
+    </div>
     <div id="left-entry-list">
         <h4>Latest entries:</h4>
         <ul>
@@ -25,9 +30,9 @@
 {% block content %}
     <div class="row text-center">
         {% if user.is_authenticated %}
-            <button class="btn" data-toggle="collapse" data-target="#entryform"><h4>Submit a new entry</h4></button>
+            <button id="index-submit" class="btn" data-toggle="collapse" data-target="#entryform"><h4>Submit a new entry</h4></button>
             <div id="entryform" class="collapse">
-                <form action="{% url 'las_site:index' %}" method='post'>
+                <form class="form-inline" action="{% url 'las_site:index' %}" method='post'>
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button name="submit">Submit</button>
